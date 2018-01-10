@@ -1,4 +1,3 @@
-
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -42,23 +41,110 @@ int power(int a,int b,int m = MOD){
 }
 
 
-int main() {
-	int h, w;
+vector<int> g[60];
+
+bool visited[50][50] = {0};
+int maximum = INT_MIN;
+int h, w;
+string s[100];
+
+
+void dfs(int, int, int , int);
+signed main() {
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	int cases = 1;
+	while(1) {
 	cin >> h >> w;
-		
+	if(h == 0 && w == 0) return 0;	
 	REP(i, h) {
-			
+		cin >> s[i];
+		for(int j = 0; j < s[i].length(); j++) {
+			s[i][j] -= 65;
+		}
+	}
 
 
+	int maxi = 0;
+	for(int i = 0; i < h; i++) {
+		for(int j = 0; j < w; j++) {
+
+			if(s[i][j] == 0) {
+				maximum = 1;
+				dfs(i, j, s[i][j], 1);
+			}
+
+			maxi = max(maxi, maximum);
+			maximum = INT_MIN;
+
+			for(int k = 0; k < h; k++) {
+				for(int l = 0; l < w; l++) {
+					visited[k][l] = 0;
+				}
+			}
+		}
+		}
+		if(maxi <= 0) {
+			cout << "Case " << cases <<":" << " " << 0 << "\n";
+		} else {
+			cout << "Case " << cases <<":" << " " << maxi << "\n";
+		}
+		cases++;
+	}
+}
 
 
+void dfs(int i, int j, int value, int count) {
+	visited[i][j] = true;	
 
+//	cout << "dfs at " << i << j << endl;	
+
+	if((j + 1 < w) && (value + 1 == s[i][j + 1]) && visited[i][j+1] != true) {
+//		cout << "index " << i << " "  << j + 1 << "satisfied" << endl;
+		maximum = max(maximum, count + 1);
+		dfs(i, j+1, s[i][j+1] , count + 1);
+	}
+	if((j - 1 >= 0) && (value + 1 == s[i][j-1]) && (visited[i][j-1] != true)) {
+//		cout << "index " << i << " "  << j - 1 << "satisfied" << endl;
+		maximum = max(maximum, count+1);
+		dfs(i, j-1, s[i][j-1], count+1);
+	}
+	if((i + 1 < h) && (value + 1 == s[i+1][j]) && visited[i+1][j] != true) {
+//		cout << "index " << i + 1 << " "  << j  << "satisfied" << endl;
+		maximum = max(maximum, count+1);
+		dfs(i+1, j, s[i+1][j], count + 1);
+	}
+	
+	if((i + 1) < h && (j - 1 >= 0) && (value + 1 == s[i+1][j - 1]) && visited[i+1][j - 1] != true) {
+//			cout << "index " << i + 1 << " "  << j - 1 << "satisfied" << endl;
+			maximum = max(maximum, count+1);
+			dfs(i+1, j - 1, s[i+1][j-1] , count+1);
+	}
+
+	if((i + 1) < h && (j + 1 < w) && (value + 1 == s[i+1][j + 1]) && visited[i+1][j + 1] != true) {
+//			cout << "index " << i + 1 << " "  << j + 1 << "satisfied" << endl;
+			maximum = max(maximum, count+1);
+			dfs(i+1, j + 1, s[i+1][j+1] , count+1);
 	}
 
 
 
 
 
+	if((i - 1 >= 0) && (value + 1 == s[i-1][j]) && (visited[i-1][j] != true)) {
+//		cout << "index " << i - 1 << " "  << j << "satisfied" << endl;
+		maximum = max(maximum, count + 1);
+		dfs(i-1, j, s[i-1][j] , count+1);
+	}
 
-
+	if((i - 1 >= 0) && (j - 1 >= 0)  && (value + 1 == s[i-1][j-1]) && visited[i-1][j-1] != true) {
+//			cout << "index " << i - 1 << " "  << j - 1 << "satisfied" << endl;
+			maximum = max(maximum, count + 1);
+			dfs(i-1, j - 1, s[i-1][j-1] , count+1);
+	}
+	if((i - 1 >= 0) && (j + 1 < w) && (value + 1 == s[i-1][j+1]) && visited[i-1][j+1] != true) {
+//			cout << "index " << i - 1 << " "  << j + 1 << "satisfied" << endl;
+			maximum = max(maximum, count+1);
+			dfs(i-1, j+1, s[i-1][j+1], count + 1);
+	}	
 }
