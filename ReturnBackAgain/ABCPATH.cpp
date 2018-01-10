@@ -121,23 +121,16 @@ void dfs(int i, int j, int value, int count) {
 		dfs(i+1, j + 1, s[i+1][j+1] , count+1);
 	}
 
-
-
-
-
 	if((i - 1 >= 0) && (value + 1 == s[i-1][j]) && (visited[i-1][j] != true)) {
-//		cout << "index " << i - 1 << " "  << j << "satisfied" << endl;
 		maximum = max(maximum, count + 1);
 		dfs(i-1, j, s[i-1][j] , count+1);
 	}
 
 	if((i - 1 >= 0) && (j - 1 >= 0)  && (value + 1 == s[i-1][j-1]) && visited[i-1][j-1] != true) {
-//			cout << "index " << i - 1 << " "  << j - 1 << "satisfied" << endl;
 			maximum = max(maximum, count + 1);
 			dfs(i-1, j - 1, s[i-1][j-1] , count+1);
 	}
 	if((i - 1 >= 0) && (j + 1 < w) && (value + 1 == s[i-1][j+1]) && visited[i-1][j+1] != true) {
-//			cout << "index " << i - 1 << " "  << j + 1 << "satisfied" << endl;
 			maximum = max(maximum, count+1);
 			dfs(i-1, j+1, s[i-1][j+1], count + 1);
 	}	
