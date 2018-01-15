@@ -1,0 +1,1 @@
+int max(int a,int b){return a>=b?a:b;}void x(int* t){scanf("%d",t);k=1,l=1;}int a[101][101],n,t,k,l;int f(int i,int j){return i+1>n?s:max(f(i+1,j),f(i+1,j+1))+a[i][j];}int main(){x(&t);while(t--){x(&n);for(k<=n;k++)for(;l<=k;)x(&a[k][l++]);printf("%d",f(1,1));}}
