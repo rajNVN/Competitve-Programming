@@ -40,7 +40,42 @@ int power(int a,int b,int m = MOD){
 	return x;
 }
 
+vi a;
+set<int> p;
+map<int, int> possible;
 
 signed main() {
 	ios::sync_with_stdio(false); cin.tie(NULL);
+	int n, k; cin >> n >> k;
+	int temp;
+	for(int i = 0; i < n; i++)  cin >> temp, a.pb(temp);
+
+	sort(a.begin(), a.end(), greater<int>());
+
+	for(int i = 0; i < a.size(); i++) {
+		p.insert(a[i]);
+		for(int j = i ; j < a.size(); j++) {
+			p.insert(a[i] + a[j]);
+			p.insert(a[i] - a[j]);
+		}
+	}
+	int max_angle = 360;
+	for(auto g: p) {
+		int LCM = lcm(g,max_angle);
+		if(LCM == 0)  {
+			possible[0] = 1;
+			continue;
+		}
+		for(int i = g; i <= LCM; i += g) {
+			possible[i % 360] = 1;
+		}
+	}
+	for(int i = 0; i < k; i++) {
+		cin >> temp;
+		if(possible[temp]) {
+			cout << "YES" << endl;
+		}
+		else cout <<"NO" << endl;
+	}
+	
 }
