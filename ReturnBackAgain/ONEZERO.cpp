@@ -41,42 +41,60 @@ int power(int a,int b,int m = MOD){
 }
 
 
+map<int, int> cache;
+
+void solve(int n) {
+	int number = 1;
+	queue<pair<int, string>> q;
+	q.push(mp(1,"1"));
+	string result = "";
+	pair<int, string> p;
+	while(!q.empty()) {
+		p = q.front();
+		int modulo = p.first % n;
+		if(cache[modulo] == 1) {
+			q.pop();
+			continue;
+		}
+		cache[modulo] = 1;
+		if(modulo == 0) {
+			cout << p.second << endl;
+			break;
+		}
+		q.pop();
+		q.push(mp((p.first * 10) % n, p.second + "0" ));
+		q.push(mp((p.first * 10 + 1) % n, p.second + "1"));
+		
+	}
+}
+
+bool check(int n) {
+	stringstream ss;
+	ss << n ;
+	string number = ss.str();
+	int flag1 = false, flag2 = false;
+	for(int i = 0; i < number.size(); i++) {
+		if(number[i] == '1') flag1 = true;
+		if(number[i] != '0' and number[i] != '1') {
+			return false;
+		}
+	}
+	if(flag1) return true;
+	return false;
+}
+
 signed main() {
-	ios::sync_with_stdio(false);
-	cin.tie(NULL);
-	int t;
-	cin >> t;
-	map<int, int> ent, ex, ans;
-	vector<int> p;
-	while(t--) {
-		int n;
+	ios::sync_with_stdio(false); cin.tie(NULL);
+	int k;
+	cin >> k;
+	while(k--) {
+		int n ;
 		cin >> n;
-		int a, b;
-
-		
-		for(int i = 0; i < n; i++) {
-
-			cin >> a >> b;
-			ent[a] = 1;
-			ex[b] = 1;
-			p.pb(a);
-			p.pb(b);
+		if(check(n)) {
+			cout << n  << endl;
+			continue;
 		}
-
-		
-		sort(p.begin(), p.end());
-
-		int maxi = -1;
-		int count = 0;
-
-		for(int num : p) {
-			if(ent[num])  count++;
-			if(ex[num]) count--;
-			maxi = max(maxi, count);
-		}
-		cout << maxi << endl;
-		p.clear();
-		ent.clear();
-		ex.clear();
+		solve(n);
+		cache.clear();
 	}
 }

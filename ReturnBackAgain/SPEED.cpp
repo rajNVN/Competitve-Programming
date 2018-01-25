@@ -42,41 +42,14 @@ int power(int a,int b,int m = MOD){
 
 
 signed main() {
-	ios::sync_with_stdio(false);
-	cin.tie(NULL);
+	ios::sync_with_stdio(false); cin.tie(NULL);
 	int t;
 	cin >> t;
-	map<int, int> ent, ex, ans;
-	vector<int> p;
 	while(t--) {
-		int n;
-		cin >> n;
-		int a, b;
-
-		
-		for(int i = 0; i < n; i++) {
-
-			cin >> a >> b;
-			ent[a] = 1;
-			ex[b] = 1;
-			p.pb(a);
-			p.pb(b);
-		}
-
-		
-		sort(p.begin(), p.end());
-
-		int maxi = -1;
-		int count = 0;
-
-		for(int num : p) {
-			if(ent[num])  count++;
-			if(ex[num]) count--;
-			maxi = max(maxi, count);
-		}
-		cout << maxi << endl;
-		p.clear();
-		ent.clear();
-		ex.clear();
+		int s1, s2;
+		cin >> s1 >> s2;
+		int answer = abs(s1 - s2) / gcd(abs(s1),abs(s2));
+		cout << answer << endl;
+			
 	}
-}
+} 

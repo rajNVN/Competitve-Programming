@@ -40,43 +40,48 @@ int power(int a,int b,int m = MOD){
 	return x;
 }
 
+bool cubefree[1000005];
+int loc[1000005];
+
+int maxi = 1000005;
+
+void solve() {
+        memset(cubefree, true, sizeof(cubefree));
+	int c ;
+
+	cubefree[0] = cubefree[1] = true;
+
+        for(int p = 2; p * p * p <= maxi; p++) {
+		c  = p * p * p;
+                        for(int i = c ; i <= maxi; i+=c) {
+				cubefree[i] = false;	
+                        }
+	}
+        
+	int j = 1;	
+	for(int i = 1; i <= maxi; i++) {
+		if(cubefree[i]) {
+			loc[i] = j++;
+		}
+	}
+}
+
 
 signed main() {
-	ios::sync_with_stdio(false);
-	cin.tie(NULL);
+	ios::sync_with_stdio(false); cin.tie(NULL);
 	int t;
 	cin >> t;
-	map<int, int> ent, ex, ans;
-	vector<int> p;
+	int cases = 1;
+	solve();
 	while(t--) {
 		int n;
+
 		cin >> n;
-		int a, b;
 
-		
-		for(int i = 0; i < n; i++) {
-
-			cin >> a >> b;
-			ent[a] = 1;
-			ex[b] = 1;
-			p.pb(a);
-			p.pb(b);
+		if(!cubefree[n]) {
+			cout << "Case " << cases++<< ":" << " Not Cube Free" << endl;
+			continue;
 		}
-
-		
-		sort(p.begin(), p.end());
-
-		int maxi = -1;
-		int count = 0;
-
-		for(int num : p) {
-			if(ent[num])  count++;
-			if(ex[num]) count--;
-			maxi = max(maxi, count);
-		}
-		cout << maxi << endl;
-		p.clear();
-		ent.clear();
-		ex.clear();
+		cout << "Case " << cases++ << ": " << loc[n] << endl;
 	}
 }

@@ -40,43 +40,35 @@ int power(int a,int b,int m = MOD){
 	return x;
 }
 
+int cache[20][100];
+
+int solve(int n, int k) {
+	if( n == 0) return 0;
+
+	if( k == 0) return 1;
+	
+	if(cache[n][k] != -1) return cache[n][k];
+
+	int sum = 0;
+
+	for(int i  = 0; i <= k; i++) {
+
+		if(i <= n - 1) {
+			sum += solve(n-1, k-i);
+		}
+
+	}
+	return cache[n][k] = sum;
+}
 
 signed main() {
-	ios::sync_with_stdio(false);
-	cin.tie(NULL);
+	ios::sync_with_stdio(false); cin.tie(NULL);
 	int t;
 	cin >> t;
-	map<int, int> ent, ex, ans;
-	vector<int> p;
 	while(t--) {
-		int n;
-		cin >> n;
-		int a, b;
-
-		
-		for(int i = 0; i < n; i++) {
-
-			cin >> a >> b;
-			ent[a] = 1;
-			ex[b] = 1;
-			p.pb(a);
-			p.pb(b);
-		}
-
-		
-		sort(p.begin(), p.end());
-
-		int maxi = -1;
-		int count = 0;
-
-		for(int num : p) {
-			if(ent[num])  count++;
-			if(ex[num]) count--;
-			maxi = max(maxi, count);
-		}
-		cout << maxi << endl;
-		p.clear();
-		ent.clear();
-		ex.clear();
+		memset(cache, -1, sizeof(cache));
+		int n, k;
+		cin >> n >> k;
+		cout << solve(n, k) << endl;
 	}
 }

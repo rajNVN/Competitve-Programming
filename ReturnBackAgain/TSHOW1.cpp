@@ -40,43 +40,35 @@ int power(int a,int b,int m = MOD){
 	return x;
 }
 
-
+vector<int> a(20, 0);
 signed main() {
-	ios::sync_with_stdio(false);
-	cin.tie(NULL);
+	ios::sync_with_stdio(false); cin.tie(NULL);
 	int t;
 	cin >> t;
-	map<int, int> ent, ex, ans;
-	vector<int> p;
+	a[0] = 0;
+	a[1] = 2;
+	for(int i = 2; i <= 60; i++) {
+		a[i] = (1 << i) + a[i-1];
+	}
 	while(t--) {
 		int n;
 		cin >> n;
-		int a, b;
-
-		
-		for(int i = 0; i < n; i++) {
-
-			cin >> a >> b;
-			ent[a] = 1;
-			ex[b] = 1;
-			p.pb(a);
-			p.pb(b);
+		cout << " n is " << n << endl;	
+		auto it = lower_bound(a.begin(), a.end(), n);
+		int index = it - a.begin();		
+//		cout << index << " is the index " << endl;
+		int index1 = n - a[index - 1];
+		index1--;
+		int answer = 0;
+		answer += index1;
+		bitset<20> m(answer);
+		string result = "";
+		for(int i = index - 1; i >=0; i--) {
+			if(m[i] == 0) 
+				result += "5";
+			else 
+				result += "6";
 		}
-
-		
-		sort(p.begin(), p.end());
-
-		int maxi = -1;
-		int count = 0;
-
-		for(int num : p) {
-			if(ent[num])  count++;
-			if(ex[num]) count--;
-			maxi = max(maxi, count);
-		}
-		cout << maxi << endl;
-		p.clear();
-		ent.clear();
-		ex.clear();
+		cout << result << endl;
 	}
 }

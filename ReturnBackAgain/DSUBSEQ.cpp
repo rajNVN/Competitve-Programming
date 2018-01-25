@@ -40,43 +40,27 @@ int power(int a,int b,int m = MOD){
 	return x;
 }
 
+int last[300];
+int dp[100005];
+
+void findcount(string s) {
+	memset(last, -1, sizeof(last));
+	dp[0] = 1;
+	for(int i = 1; i <= s.size(); i++) {
+		dp[i] = (2 * dp[i-1]) % MOD;
+		if(last[s[i-1]] != -1) dp[i] = (dp[i] - dp[last[s[i-1]]] + MOD) % MOD;
+		last[s[i-1]] = i - 1;	
+	}
+	cout << dp[s.size()] % MOD << endl;
+}
 
 signed main() {
-	ios::sync_with_stdio(false);
-	cin.tie(NULL);
+	ios::sync_with_stdio(false); cin.tie(NULL);
 	int t;
 	cin >> t;
-	map<int, int> ent, ex, ans;
-	vector<int> p;
 	while(t--) {
-		int n;
-		cin >> n;
-		int a, b;
-
-		
-		for(int i = 0; i < n; i++) {
-
-			cin >> a >> b;
-			ent[a] = 1;
-			ex[b] = 1;
-			p.pb(a);
-			p.pb(b);
-		}
-
-		
-		sort(p.begin(), p.end());
-
-		int maxi = -1;
-		int count = 0;
-
-		for(int num : p) {
-			if(ent[num])  count++;
-			if(ex[num]) count--;
-			maxi = max(maxi, count);
-		}
-		cout << maxi << endl;
-		p.clear();
-		ent.clear();
-		ex.clear();
+		string s;
+		cin >> s;
+		findcount(s);
 	}
 }

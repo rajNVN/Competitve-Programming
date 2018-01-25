@@ -40,43 +40,52 @@ int power(int a,int b,int m = MOD){
 	return x;
 }
 
+vector<int> x, y;
+
+
+int solve() {
+	int l1 = y.size();
+	int l2 = x.size();
+	sort(x.begin(), x.end(), greater<int>());	
+	sort(y.begin(), y.end(), greater<int>());
+
+	int h = 1, v = 1;
+	int i = 0, j = 0;
+	int res = 0;
+
+	while(i < l1 && j < l2) {
+
+		if(y[i] > x[j]) {
+			res += y[i] * v;
+			i++;
+			h++;
+		} else {
+			res += x[j] * h;
+			v++;
+			j++;
+		}
+	}
+	for(int k = i; k < l1; k++) {
+		res += y[k] * v;
+	}
+
+	for(int k = j; k < l2; k++) res += x[k] * h;
+
+	return res;
+
+}
 
 signed main() {
-	ios::sync_with_stdio(false);
-	cin.tie(NULL);
+	ios::sync_with_stdio(false); cin.tie(NULL);
 	int t;
 	cin >> t;
-	map<int, int> ent, ex, ans;
-	vector<int> p;
 	while(t--) {
-		int n;
-		cin >> n;
-		int a, b;
-
-		
-		for(int i = 0; i < n; i++) {
-
-			cin >> a >> b;
-			ent[a] = 1;
-			ex[b] = 1;
-			p.pb(a);
-			p.pb(b);
-		}
-
-		
-		sort(p.begin(), p.end());
-
-		int maxi = -1;
-		int count = 0;
-
-		for(int num : p) {
-			if(ent[num])  count++;
-			if(ex[num]) count--;
-			maxi = max(maxi, count);
-		}
-		cout << maxi << endl;
-		p.clear();
-		ent.clear();
-		ex.clear();
+		int m, n;
+		cin >> m >> n;
+		int temp;
+		for(int i = 0 ; i < m - 1 ; i++) cin >> temp, x.pb(temp);
+		for(int j = 0; j < n - 1 ; j++) cin >> temp, y.pb(temp);
+		cout << solve() << endl;
+		x.clear(), y.clear();
 	}
 }

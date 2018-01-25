@@ -42,41 +42,63 @@ int power(int a,int b,int m = MOD){
 
 
 signed main() {
-	ios::sync_with_stdio(false);
-	cin.tie(NULL);
-	int t;
-	cin >> t;
-	map<int, int> ent, ex, ans;
-	vector<int> p;
-	while(t--) {
-		int n;
-		cin >> n;
-		int a, b;
+	ios::sync_with_stdio(false); cin.tie(NULL);
+	while(1) {
+		int n; cin >> n;
 
-		
+		if(n == 0) break;
+
+		vector<int> station(n);
+
 		for(int i = 0; i < n; i++) {
-
-			cin >> a >> b;
-			ent[a] = 1;
-			ex[b] = 1;
-			p.pb(a);
-			p.pb(b);
+			cin >> station[i];
 		}
-
 		
-		sort(p.begin(), p.end());
+		sort(station.begin(), station.end());
 
-		int maxi = -1;
-		int count = 0;
+		int flag = 0;
+		int distance = 0;
 
-		for(int num : p) {
-			if(ent[num])  count++;
-			if(ex[num]) count--;
-			maxi = max(maxi, count);
+		for(int i = 1; i < n; i++) {
+			if((station[i] - station[i-1]) > 200) {
+				flag = 1; break;
+			} 
+			distance += station[i] - station[i-1];
 		}
-		cout << maxi << endl;
-		p.clear();
-		ent.clear();
-		ex.clear();
+		if(flag) {
+			cout << "IMPOSSIBLE" << endl; continue;
+		}
+		if(station[n-1] != 1422) {
+			distance += 1422 - station[n-1];
+		}
+
+		if(distance < 1422) {
+			cout <<"IMPOSSIBLE"<< endl; continue;
+		}
+
+		int start = 200 - (1422 - station[n-1]);
+
+		if(1422 - station[n-1] > start) {
+			cout << "IMPOSSIBLE" << endl;continue;
+		}
+
+		distance = 1422 - station[n-1];
+		flag = 0;
+		for(int i = n-2; i>=0; i--) {
+			if(station[i+1] - station[i] > 200)  {
+				flag =1 ; break;
+			}
+			distance += station[i+1] - station[i] ;
+		}
+		if(flag) {
+			cout << "IMPOSSIBLE" << endl;
+			continue;
+		}
+		if(distance < 1422) {
+			cout << "IMPOSSIBLE" << endl;
+			continue;
+		}
+		cout << "POSSIBLE" << endl;
 	}
 }
+

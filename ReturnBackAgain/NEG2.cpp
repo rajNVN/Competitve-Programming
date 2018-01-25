@@ -42,41 +42,32 @@ int power(int a,int b,int m = MOD){
 
 
 signed main() {
-	ios::sync_with_stdio(false);
-	cin.tie(NULL);
-	int t;
-	cin >> t;
-	map<int, int> ent, ex, ans;
-	vector<int> p;
-	while(t--) {
-		int n;
-		cin >> n;
-		int a, b;
-
-		
-		for(int i = 0; i < n; i++) {
-
-			cin >> a >> b;
-			ent[a] = 1;
-			ex[b] = 1;
-			p.pb(a);
-			p.pb(b);
-		}
-
-		
-		sort(p.begin(), p.end());
-
-		int maxi = -1;
-		int count = 0;
-
-		for(int num : p) {
-			if(ent[num])  count++;
-			if(ex[num]) count--;
-			maxi = max(maxi, count);
-		}
-		cout << maxi << endl;
-		p.clear();
-		ent.clear();
-		ex.clear();
+	ios::sync_with_stdio(false); cin.tie(NULL);
+	int number;
+	cin >> number;
+	if(number == 0) {
+		cout << 0 << endl; return 0;
 	}
+	string result = "";
+	while(!(number == 1)) {
+		if(number < 0) {
+			if(abs(number) & 1) {
+				result += "1"; 
+				number = (number / -2)  + 1;
+			} else {
+				result += "0";
+				number = number / -2;
+			}
+		} else {
+			result += ( number % -2) + 48;
+			number = number / -2; 
+		}
+	}
+
+	result += "1";
+
+	for(int i = result.size() - 1; i >=0 ; i--) {
+		cout << result[i] ;
+	}
+	cout << endl;
 }

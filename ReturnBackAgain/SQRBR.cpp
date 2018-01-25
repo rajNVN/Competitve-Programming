@@ -40,43 +40,49 @@ int power(int a,int b,int m = MOD){
 	return x;
 }
 
+ int maxi ;
 
-signed main() {
-	ios::sync_with_stdio(false);
-	cin.tie(NULL);
-	int t;
-	cin >> t;
-	map<int, int> ent, ex, ans;
-	vector<int> p;
-	while(t--) {
-		int n;
-		cin >> n;
-		int a, b;
+int dp[50][50][50];
+map<int, int> isOpen;
 
-		
-		for(int i = 0; i < n; i++) {
+int solve(int number, int openNo, int closedNo) {
 
-			cin >> a >> b;
-			ent[a] = 1;
-			ex[b] = 1;
-			p.pb(a);
-			p.pb(b);
-		}
+	if(closedNo > openNo){
+		return 0;
+	}
 
-		
-		sort(p.begin(), p.end());
-
-		int maxi = -1;
-		int count = 0;
-
-		for(int num : p) {
-			if(ent[num])  count++;
-			if(ex[num]) count--;
-			maxi = max(maxi, count);
-		}
-		cout << maxi << endl;
-		p.clear();
-		ent.clear();
-		ex.clear();
+	if(number > maxi) {
+		if(openNo == closedNo) return 1; else  return 0;
+	}
+	
+	if(dp[number][openNo][closedNo] != -1) return dp[number][openNo][closedNo];
+	int answer = 0;
+	if(isOpen[number]) {
+		answer += solve(number + 1, openNo + 1, closedNo); 
+		return dp[number][openNo][closedNo] = answer;
+	} else {
+		answer += solve(number + 1, openNo + 1, closedNo);
+		answer += solve(number + 1, openNo, closedNo + 1);
+		return dp[number][openNo][closedNo] = answer;
 	}
 }
+
+signed main() {
+	ios::sync_with_stdio(false); cin.tie(NULL);
+	int t; cin >> t;
+	while(t--) {
+		int n, k;
+		cin >> n >> k;
+		maxi = n * 2;
+		memset(dp, -1, sizeof(dp));
+		int temp;
+		for(int i = 0; i < k; i++) {
+			cin >> temp;
+			isOpen[temp] = 1;
+		}
+		cout <<solve(1, 0, 0)<< endl;
+		isOpen.clear();
+	}
+}
+
+

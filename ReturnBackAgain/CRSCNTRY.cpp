@@ -40,43 +40,61 @@ int power(int a,int b,int m = MOD){
 	return x;
 }
 
+vector<int> agnes, tom;
+
+int L[2500][2500];
+
+int lcs() {
+
+	int len1 = agnes.size();
+	int len2 = tom.size();
+
+	for(int i = 0; i <= len1; i++) {
+		for(int j = 0; j <= len2; j++) {
+			if( i == 0 || j == 0) 
+				L[i][j] = 0;
+			else if(agnes[i-1] == tom[j-1]) {
+				L[i][j]  = L[i-1][j-1] + 1;
+			}
+			else 
+				L[i][j] = max(L[i-1][j], L[i][j-1]);
+		}
+	}
+	return L[len1][len2];
+}
 
 signed main() {
-	ios::sync_with_stdio(false);
-	cin.tie(NULL);
-	int t;
+	ios::sync_with_stdio(false); cin.tie(NULL);
+	int t; 
 	cin >> t;
-	map<int, int> ent, ex, ans;
-	vector<int> p;
 	while(t--) {
-		int n;
-		cin >> n;
-		int a, b;
+		int num;
 
-		
-		for(int i = 0; i < n; i++) {
-
-			cin >> a >> b;
-			ent[a] = 1;
-			ex[b] = 1;
-			p.pb(a);
-			p.pb(b);
+		while(1) {
+			cin >> num ;
+			if(num == 0) break;
+			agnes.pb(num);
 		}
-
-		
-		sort(p.begin(), p.end());
 
 		int maxi = -1;
-		int count = 0;
 
-		for(int num : p) {
-			if(ent[num])  count++;
-			if(ex[num]) count--;
-			maxi = max(maxi, count);
+		for( ; ;  ) {
+			cin >> num ;
+			if(num == 0) break;
+			tom.pb(num);
+
+			for(; ;  ) {
+				cin >> num ;
+				if(num == 0) break;
+				tom.pb(num);
+			}
+			maxi = max(lcs(), maxi);
+			tom.clear();
 		}
+
 		cout << maxi << endl;
-		p.clear();
-		ent.clear();
-		ex.clear();
+		agnes.clear();
+		tom.clear();
+
 	}
 }
