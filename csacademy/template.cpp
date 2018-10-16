@@ -1,12 +1,19 @@
-#include <iostream>
 #include <bits/stdc++.h>
 #define ll long long int 
 #define MOD 1e9 + 7 
 #define INF 1<<30
 using namespace std ;
 
+void pilot() {
+    ios::sync_with_stdio(false);
+    cin.tie(null);
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+}
+
 
 int main() {
+    pilot();
     ll number ; 
     cin >> number ; 
     stringstream ss ; 
