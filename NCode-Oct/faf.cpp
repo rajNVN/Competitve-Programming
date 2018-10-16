@@ -35,6 +35,8 @@ void weighted_union(long long int Arr[ ], long long int size[ ], long long int A
 
 int main()
 {
+    ios::sync_with_stdio(false);
+    cin.tie(null);
     long long int p, n , a, b;
     cin >> n >> p;
     long long int size[n], arr[n];
