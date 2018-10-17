@@ -36,7 +36,7 @@ int power(int a,int b,int m = MOD){
 	if(b == 1) return a;
 	int x = power(a,b/2,m)%m;
 	x = (x*x)%m;
-	if(b%2) return (x*a)%m;
+	if(b%2) return (x*a)%m;// 
 	return x;
 }
 
