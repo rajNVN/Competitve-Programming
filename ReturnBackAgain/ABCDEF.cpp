@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-#define ll long long
+#define ll long 
 #define int ll
 #define pb push_back
 #define INF 1000000000
