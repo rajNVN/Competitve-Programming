@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
 
-	// your code here
+	// your code her
 
 	int t;
 	cin>>t;
