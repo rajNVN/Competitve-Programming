@@ -38,7 +38,7 @@ for a in set(newstring):
     if tempmax > maxi:
         maxi = tempmax
 
-print(maxi)
+print(maxi,end='')
 
 
 
