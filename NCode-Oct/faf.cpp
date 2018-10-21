@@ -33,6 +33,10 @@ void weighted_union(long long int Arr[ ], long long int size[ ], long long int A
     }
 }
 
+void print_result(int result) {
+    cout << result << endl ;
+}
+
 int main()
 {
     ios::sync_with_stdio(false);
@@ -64,5 +68,5 @@ int main()
         }
 
     }
-    cout << result << endl; //hello
+    print_result(result); 
 }
